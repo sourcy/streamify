@@ -15,21 +15,14 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.javaslang</groupId>
             <artifactId>javaslang</artifactId>
-            <version>${javaslang.version}</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

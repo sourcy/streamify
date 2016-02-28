@@ -1,14 +1,18 @@
 package io.sourcy.tostream;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 import javaslang.control.Either;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import java.util.*;
 
-import static io.sourcy.tostream.ToStream.*;
-import static io.sourcy.tostream.Collectors.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+import static io.sourcy.tostream.StreamCollectors.*;
+import static io.sourcy.tostream.ToStream.toStream;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 /*
@@ -20,65 +24,82 @@ import static io.sourcy.tostream.Collectors.*;
  *  /____/ \____/ \__,_//_/    \___/ \__, /(_)/_/ \____/
  *                                  /____/
  *
- * Created by daniel selinger <d.selinger@sourcy.io> on $today.format('yyyy-MM-dd HH:mm').
+ * Created by daniel selinger <d.selinger@sourcy.io> on 2016-02-27.
  */
 
-public class ToStreamTest implements TestData {
+/**
+ * @author daniel selinger
+ * @author armin walland
+ */
+public class ToStreamTest {
+    private final TestData testData = new TestData();
 
-    private Optional<Integer> mapPositiveOptional(Integer i) {
+    private Optional<Integer> mapPositiveOptional(final Integer i) {
         return (i >= 0) ? Optional.of(i) : Optional.empty();
     }
 
-    private Either<String, Integer> mapPositiveEither(Integer i) {
+    private Either<String, Integer> mapPositiveEither(final Integer i) {
         return (i >= 0) ? Either.right(i) : Either.left("Negative Number!");
     }
 
     @Test
     public void testToStreamArray() {
-        assertEquals(allValues, toStream(allValues.toArray()).collect(toImmutableList()));
+        final Integer[] a = new Integer[testData.getAllValues().size()];
+        final List<Integer> result = toStream(testData.getAllValues().toArray(a)).collect(toImmutableList());
+        assertThat(result, is(testData.getAllValues()));
     }
+
     @Test
     public void testToStreamList() {
-        assertEquals(allValues, toStream(allValues).collect(toImmutableList()));
+        final List<Integer> result = toStream(testData.getAllValues()).collect(toImmutableList());
+        assertThat(result, is(testData.getAllValues()));
     }
 
     @Test
     public void testToStreamSet() {
-        assertEquals(distinctPositiveValues, toStream(distinctPositiveValues).collect(toImmutableSet()));
+        final Set<Integer> result = toStream(testData.getDistinctPositiveValues()).collect(toImmutableSet());
+        assertThat(result, is(testData.getDistinctPositiveValues()));
     }
 
     @Test
     public void testToStreamMap() {
-        assertEquals(mappedPositiveValues, toStream(mappedPositiveValues).collect(toImmutableMap()));
+        final Map<Integer, Boolean> result = toStream(testData.getMappedPositiveValues()).collect(toImmutableMap());
+        assertThat(result, is(testData.getMappedPositiveValues()));
     }
 
     @Test
     public void testToStreamOptional() {
-        assertEquals(ImmutableList.of(1), toStream(Optional.of(1)).collect(toImmutableList()));
-        assertEquals(ImmutableList.of(), toStream(Optional.empty()).collect(toImmutableList()));
+        final List<Integer> result1 = toStream(Optional.of(1)).collect(toImmutableList());
+        assertThat(result1, is(ImmutableList.of(1)));
+
+        final List<Integer> result2 = toStream(Optional.<Integer>empty()).collect(toImmutableList());
+        assertThat(result2, is(ImmutableList.of()));
     }
 
     @Test
     public void testToStreamFlatMapOptional() {
-        final List<Integer> values = toStream(allValues)
+        final List<Integer> result = toStream(testData.getAllValues())
                 .flatMap(i -> toStream(mapPositiveOptional(i)))
                 .collect(toImmutableList());
 
-        assertEquals(positiveValues, values);
+        assertThat(result, is(testData.getPositiveValues()));
     }
 
     @Test
     public void testToStreamEither() {
-        assertEquals(ImmutableList.of(1), toStream(Either.right(1)).collect(toImmutableList()));
-        assertEquals(ImmutableList.of(), toStream(Either.left("error message")).collect(toImmutableList()));
+        final List<Integer> result1 = toStream(Either.<String, Integer>right(1)).collect(toImmutableList());
+        assertThat(result1, is(ImmutableList.of(1)));
+
+        final List<Integer> result2 = toStream(Either.<String, Integer>left("error message")).collect(toImmutableList());
+        assertThat(result2, is(ImmutableList.of()));
     }
 
     @Test
     public void testToStreamFlatMapEither() {
-        final List<Integer> values = toStream(allValues)
+        final List<Integer> result = toStream(testData.getAllValues())
                 .flatMap(i -> toStream(mapPositiveEither(i)))
                 .collect(toImmutableList());
 
-        assertEquals(positiveValues, values);
+        assertThat(result, is(testData.getPositiveValues()));
     }
 }

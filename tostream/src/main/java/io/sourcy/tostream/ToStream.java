@@ -9,7 +9,7 @@ package io.sourcy.tostream;
  *  /____/ \____/ \__,_//_/    \___/ \__, /(_)/_/ \____/
  *                                  /____/
  *
- * Created by daniel selinger <d.selinger@sourcy.io> on $today.format('yyyy-MM-dd HH:mm').
+ * Created by daniel selinger <d.selinger@sourcy.io> on 2016-02-27.
  */
 
 import javaslang.Tuple;
@@ -22,27 +22,32 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * @author daniel selinger
+ * @author armin walland
+ */
 public final class ToStream {
 
-    private ToStream() {}
+    private ToStream() {
+    }
 
-    public static <T> Stream<T> toStream(Optional<T> o) {
+    public static <T> Stream<T> toStream(final Optional<T> o) {
         return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
     }
 
-    public static <E, T> Stream<T> toStream(Either<E, T> e) {
+    public static <E, T> Stream<T> toStream(final Either<E, T> e) {
         return e.isRight() ? Stream.of(e.get()) : Stream.empty();
     }
 
-    public static <T> Stream<T> toStream(Collection<T> c) {
+    public static <T> Stream<T> toStream(final Collection<T> c) {
         return c.stream();
     }
 
-    public static <T> Stream<T> toStream(T[] a) {
+    public static <T> Stream<T> toStream(final T[] a) {
         return Arrays.stream(a);
     }
 
-    public static <K, V> Stream<Tuple2<K, V>> toStream(Map<K, V> m) {
+    public static <K, V> Stream<Tuple2<K, V>> toStream(final Map<K, V> m) {
         return m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue()));
     }
 }
