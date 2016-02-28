@@ -14,6 +14,7 @@ package io.sourcy.tostream;
 
 import javaslang.Tuple;
 import javaslang.Tuple2;
+import javaslang.Value;
 import javaslang.control.Either;
 
 import java.util.Arrays;
@@ -36,7 +37,11 @@ public final class ToStream {
     }
 
     public static <E, T> Stream<T> toStream(final Either<E, T> e) {
-        return e.isRight() ? Stream.of(e.get()) : Stream.empty();
+        return e.toJavaStream();
+    }
+
+    public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
+        return v.toJavaStream();
     }
 
     public static <T> Stream<T> toStream(final Collection<T> c) {

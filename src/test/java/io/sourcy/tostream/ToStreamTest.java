@@ -2,6 +2,7 @@ package io.sourcy.tostream;
 
 import com.google.common.collect.ImmutableList;
 import javaslang.control.Either;
+import javaslang.control.Try;
 import org.junit.Test;
 
 import java.util.List;
@@ -101,5 +102,17 @@ public class ToStreamTest {
                 .collect(toImmutableList());
 
         assertThat(result, is(testData.getPositiveValues()));
+    }
+
+    @Test
+    public void testToStreamTryFailure() {
+        final List<Integer> result = toStream(Try.<Integer>failure(new Throwable("nothing"))).collect(toImmutableList());
+        assertThat(result, is(ImmutableList.<Integer>of()));
+    }
+
+    @Test
+    public void testToStreamTrySuccess() {
+        final List<Integer> result = toStream(Try.success(9)).collect(toImmutableList());
+        assertThat(result, is(ImmutableList.of(9)));
     }
 }
