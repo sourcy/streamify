@@ -9,7 +9,6 @@ import java.util.*;
 
 import static io.sourcy.tostream.ToStream.*;
 import static io.sourcy.tostream.Collectors.*;
-import static java.util.stream.Collectors.*;
 
 
 /*
@@ -55,30 +54,30 @@ public class ToStreamTest implements TestData {
 
     @Test
     public void testToStreamOptional() {
-        assertEquals(ImmutableList.of(1), toStream(Optional.of(1)).collect(toList()));
-        assertEquals(ImmutableList.of(), toStream(Optional.empty()).collect(toList()));
+        assertEquals(ImmutableList.of(1), toStream(Optional.of(1)).collect(toImmutableList()));
+        assertEquals(ImmutableList.of(), toStream(Optional.empty()).collect(toImmutableList()));
     }
 
     @Test
     public void testToStreamFlatMapOptional() {
         final List<Integer> values = toStream(allValues)
                 .flatMap(i -> toStream(mapPositiveOptional(i)))
-                .collect(toList());
+                .collect(toImmutableList());
 
         assertEquals(positiveValues, values);
     }
 
     @Test
     public void testToStreamEither() {
-        assertEquals(ImmutableList.of(1), toStream(Either.right(1)).collect(toList()));
-        assertEquals(ImmutableList.of(), toStream(Either.left("error message")).collect(toList()));
+        assertEquals(ImmutableList.of(1), toStream(Either.right(1)).collect(toImmutableList()));
+        assertEquals(ImmutableList.of(), toStream(Either.left("error message")).collect(toImmutableList()));
     }
 
     @Test
     public void testToStreamFlatMapEither() {
         final List<Integer> values = toStream(allValues)
                 .flatMap(i -> toStream(mapPositiveEither(i)))
-                .collect(toList());
+                .collect(toImmutableList());
 
         assertEquals(positiveValues, values);
     }

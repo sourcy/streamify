@@ -33,7 +33,12 @@ public class CollectorsTest implements TestData {
     }
 
     @Test
-    public void testToImmutableMap() {
+    public void testToImmutableMapWithTuples() {
         assertEquals(mappedPositiveValues, toStream(mappedPositiveValues).collect(toImmutableMap()));
+    }
+
+    @Test
+    public void testToImmutableMapWithMappers() {
+        assertEquals(mappedPositiveValues, toStream(allValues).distinct().collect(toImmutableMap(i -> i, i -> i >= 0)));
     }
 }
