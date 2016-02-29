@@ -12,6 +12,7 @@ package io.sourcy.streamslang;
  * Created by daniel selinger <d.selinger@sourcy.io> on 2016-02-27.
  */
 
+import com.google.common.collect.Multiset;
 import javaslang.Tuple;
 import org.junit.Test;
 
@@ -69,5 +70,13 @@ public class StreamCollectorsTest {
                 .distinct()
                 .collect(Collectors.toMap(identity(), identity()));
         assertThat(result, is(expected));
+    }
+
+    @Test
+    public void testToGuavaImmutableSortedMultiset() {
+        final List<Multiset.Entry<Integer>> result = toStream(testData.getAllValues()).collect(toGuavaImmutableSortedMultiset(Integer::compareTo)).entrySet().stream().collect(Collectors.toList());
+        assertThat(result.get(0).getCount(), is(1));
+        assertThat(result.get(1).getCount(), is(1));
+        assertThat(result.get(2).getCount(), is(2));
     }
 }
