@@ -1,4 +1,4 @@
-package io.sourcy.tostream;
+package io.sourcy.streamslang;
 
 /*
  * Copyright (c) Sourcy Software & Services GmbH $today.year.
@@ -11,10 +11,6 @@ package io.sourcy.tostream;
  *
  * Created by daniel selinger <d.selinger@sourcy.io> on 2016-02-27.
  */
-/**
- * @author daniel selinger
- * @author armin walland
- */
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -24,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author daniel selinger
+ * @author armin walland
+ */
 public final class TestData {
     protected TestData() {
     }

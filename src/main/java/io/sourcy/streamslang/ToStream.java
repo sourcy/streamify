@@ -1,4 +1,4 @@
-package io.sourcy.tostream;
+package io.sourcy.streamslang;
 
 /*
  * Copyright (c) Sourcy Software & Services GmbH $today.year.
@@ -15,7 +15,6 @@ package io.sourcy.tostream;
 import javaslang.Tuple;
 import javaslang.Tuple2;
 import javaslang.Value;
-import javaslang.control.Either;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,16 +31,10 @@ public final class ToStream {
     private ToStream() {
     }
 
+    // tostream for java standard collections
+
     public static <T> Stream<T> toStream(final Optional<T> o) {
         return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
-    }
-
-    public static <E, T> Stream<T> toStream(final Either<E, T> e) {
-        return e.toJavaStream();
-    }
-
-    public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
-        return v.toJavaStream();
     }
 
     public static <T> Stream<T> toStream(final Collection<T> c) {
@@ -55,4 +48,14 @@ public final class ToStream {
     public static <K, V> Stream<Tuple2<K, V>> toStream(final Map<K, V> m) {
         return m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue()));
     }
+
+    // tostream for special guava collections (not covered or awkward to use by java standard types)
+    // TODO
+
+    // tostream for javaslang collections
+
+    public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
+        return v.toJavaStream();
+    }
+
 }
