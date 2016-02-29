@@ -92,7 +92,7 @@ public final class StreamCollectors {
 
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
-            
+
     public static <T> Collector<T, ?, ImmutableSet<T>> toGuavaImmutableSet() {
         final Supplier<ImmutableSet.Builder<T>> supplier = ImmutableSet.Builder::new;
         final BiConsumer<ImmutableSet.Builder<T>, T> accumulator = ImmutableSet.Builder::add;
@@ -111,7 +111,7 @@ public final class StreamCollectors {
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
 
-    public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableSortedMap<K, V>> toGuavaImmutableSortedMap(Comparator<? super K> comparator) {
+    public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableSortedMap<K, V>> toGuavaImmutableSortedMap(final Comparator<? super K> comparator) {
         final Supplier<ImmutableSortedMap.Builder<K, V>> supplier = () -> new ImmutableSortedMap.Builder<>(comparator);
         final BiConsumer<ImmutableSortedMap.Builder<K, V>, Tuple2<K, V>> accumulator = (b, t) -> b.put(t._1, t._2);
         final BinaryOperator<ImmutableSortedMap.Builder<K, V>> combiner = (l, r) -> l.putAll(r.build());
@@ -120,7 +120,7 @@ public final class StreamCollectors {
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
 
-    public static <T> Collector<T, ?, ImmutableSortedMultiset<T>> toGuavaImmutableSortedMultiset(Comparator<? super T> comparator) {
+    public static <T> Collector<T, ?, ImmutableSortedMultiset<T>> toGuavaImmutableSortedMultiset(final Comparator<? super T> comparator) {
         final Supplier<ImmutableSortedMultiset.Builder<T>> supplier = () -> new ImmutableSortedMultiset.Builder<>(comparator);
         final BiConsumer<ImmutableSortedMultiset.Builder<T>, T> accumulator = ImmutableSortedMultiset.Builder::add;
         final BinaryOperator<ImmutableSortedMultiset.Builder<T>> combiner = (l, r) -> l.addAll(r.build());
@@ -129,7 +129,7 @@ public final class StreamCollectors {
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
 
-    public static <T> Collector<T, ?, ImmutableSortedSet<T>> toGuavaImmutableSortedSet(Comparator<? super T> comparator) {
+    public static <T> Collector<T, ?, ImmutableSortedSet<T>> toGuavaImmutableSortedSet(final Comparator<? super T> comparator) {
         final Supplier<ImmutableSortedSet.Builder<T>> supplier = () -> new ImmutableSortedSet.Builder<>(comparator);
         final BiConsumer<ImmutableSortedSet.Builder<T>, T> accumulator = ImmutableSortedSet.Builder::add;
         final BinaryOperator<ImmutableSortedSet.Builder<T>> combiner = (l, r) -> l.addAll(r.build());
