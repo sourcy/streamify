@@ -16,6 +16,7 @@ import com.google.common.collect.Multiset;
 import javaslang.Tuple;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -74,9 +75,26 @@ public class StreamCollectorsTest {
 
     @Test
     public void testToGuavaImmutableSortedMultiset() {
-        final List<Multiset.Entry<Integer>> result = toStream(testData.getAllValues()).collect(toGuavaImmutableSortedMultiset(Integer::compareTo)).entrySet().stream().collect(Collectors.toList());
-        assertThat(result.get(0).getCount(), is(1));
-        assertThat(result.get(1).getCount(), is(1));
-        assertThat(result.get(2).getCount(), is(2));
+        // this will break if the hashing algorithm changes
+        final Iterator<Multiset.Entry<Integer>> result = toStream(testData.getAllValues())
+                .collect(toGuavaImmutableSortedMultiset(Integer::compareTo))
+                .entrySet()
+                .stream()
+                .iterator();
+        assertThat(result.next().getCount(), is(1));
+        assertThat(result.next().getCount(), is(1));
+        assertThat(result.next().getCount(), is(2));
+    }
+
+    @Test
+    public void testToGuavaImmutableMultiset() {
+        // this will break if the hashing algorithm changes
+        final Iterator<Multiset.Entry<Integer>> iterator = toStream(testData.getAllValues())
+                .collect(toGuavaImmutableMultiset())
+                .entrySet()
+                .iterator();
+        assertThat(iterator.next().getCount(), is(1));
+        assertThat(iterator.next().getCount(), is(2));
+        assertThat(iterator.next().getCount(), is(1));
     }
 }
