@@ -1,7 +1,7 @@
 package io.sourcy.streamslang;
 
 /*
- * Copyright (c) Sourcy Software & Services GmbH $today.year.
+ * Copyright (c) Sourcy Software & Services GmbH 2016.
  *
  *     _____ ____   __  __ _____ _____ __  __    (_)____
  *    / ___// __ \ / / / // ___// ___// / / /   / // __ \
