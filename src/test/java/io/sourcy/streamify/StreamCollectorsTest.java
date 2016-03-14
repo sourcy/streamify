@@ -1,4 +1,4 @@
-package io.sourcy.streamslang;
+package io.sourcy.streamify;
 
 /*
  * Copyright (c) Sourcy Software & Services GmbH 2016.
@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.sourcy.streamslang.StreamCollectors.*;
-import static io.sourcy.streamslang.ToStream.toStream;
+import static io.sourcy.streamify.StreamCollectors.*;
+import static io.sourcy.streamify.ToStream.toStream;
 import static java.util.function.Function.identity;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

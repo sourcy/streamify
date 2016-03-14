@@ -1,4 +1,4 @@
-package io.sourcy.streamslang;
+package io.sourcy.streamify;
 
 /*
  * Copyright (c) Sourcy Software & Services GmbH 2016.
