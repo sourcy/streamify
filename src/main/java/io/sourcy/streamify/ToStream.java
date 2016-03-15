@@ -32,7 +32,6 @@ public final class ToStream {
     }
 
     // tostream for java standard collections
-
     public static <T> Stream<T> toStream(final Optional<T> o) {
         return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
     }
@@ -50,12 +49,10 @@ public final class ToStream {
     }
 
     // tostream for special guava collections (not covered or awkward to use by java standard types)
-    // TODO
+    // TODO write toStream + collector tests for all immutable guava collections and check it the stream contains usable data
 
     // tostream for javaslang collections
-
     public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
         return v.toJavaStream();
     }
-
 }

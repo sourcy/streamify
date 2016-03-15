@@ -28,6 +28,9 @@ public final class TestData {
     protected TestData() {
     }
 
+    // TODO should we just kill this and inline testdata within each test? doesn't seem worth it
+    // tests are probably more readable when we inline this definitions
+
     private final List<Integer> allValues = ImmutableList.of(1, 2, 2, -3);
     private final List<Integer> positiveValues = ImmutableList.of(1, 2, 2);
     private final Set<Integer> distinctPositiveValues = ImmutableSet.of(1, 2);

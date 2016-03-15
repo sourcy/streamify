@@ -24,6 +24,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author daniel selinger
@@ -34,16 +35,50 @@ public final class StreamCollectors {
     private StreamCollectors() {
     }
 
-    // java standard collectors (sane alternatives for eg toMap)
-    // TODO
+    // TODO test remaining collectors
 
-    // guava collectors (excluding special purpose collections like class, type and range collections)
+    // shorthands for common collection types to guava immutable implementations
+    // TODO should we rename those to something not colliding with java standard collectors? i like it though
+    public static <T> Collector<T, ?, ImmutableList<T>> toList() {
+        return toGuavaImmutableList();
+    }
 
+    public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableMap<K, V>> toMap() {
+        return toGuavaImmutableMap();
+    }
+
+    public static <T> Collector<T, ?, ImmutableSet<T>> toSet() {
+        return toGuavaImmutableSet();
+    }
+
+    // java standard collectors (for consistent naming and a sane default for toMap)
+    public static <T> Collector<T, ?, java.util.List<T>> toJavaList() {
+        return Collectors.toList();
+    }
+
+    public static <T> Collector<T, ?, java.util.Set<T>> toJavaSet() {
+        return Collectors.toSet();
+    }
+
+    public static <K, V> Collector<Tuple2<K, V>, ?, java.util.Map<K, V>> toJavaMap() {
+        return Collectors.toMap(Tuple2::_1, Tuple2::_2);
+    }
+
+    // guava immutable collectors (order by javadoc, excluding ImmutableCollection - it's Builder is abstract)
     public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableBiMap<K, V>> toGuavaImmutableBiMap() {
         final Supplier<ImmutableBiMap.Builder<K, V>> supplier = ImmutableBiMap.Builder::new;
         final BiConsumer<ImmutableBiMap.Builder<K, V>, Tuple2<K, V>> accumulator = (b, t) -> b.put(t._1, t._2);
         final BinaryOperator<ImmutableBiMap.Builder<K, V>> combiner = (l, r) -> l.putAll(r.build());
         final Function<ImmutableBiMap.Builder<K, V>, ImmutableBiMap<K, V>> finisher = ImmutableBiMap.Builder::build;
+
+        return Collector.of(supplier, accumulator, combiner, finisher);
+    }
+
+    public static <T, A extends T> Collector<Tuple2<Class<A>,A>, ?, ImmutableClassToInstanceMap<T>> toGuavaImmutableClassToInstanceMap() {
+        final Supplier<ImmutableClassToInstanceMap.Builder<T>> supplier = ImmutableClassToInstanceMap.Builder::new;
+        final BiConsumer<ImmutableClassToInstanceMap.Builder<T>, Tuple2<Class<A>,A>> accumulator = (b, t) -> b.put(t._1, t._2);
+        final BinaryOperator<ImmutableClassToInstanceMap.Builder<T>> combiner = (l, r) -> l.putAll(r.build());
+        final Function<ImmutableClassToInstanceMap.Builder<T>, ImmutableClassToInstanceMap<T>> finisher = ImmutableClassToInstanceMap.Builder::build;
 
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
@@ -89,6 +124,24 @@ public final class StreamCollectors {
         final BiConsumer<ImmutableMultiset.Builder<T>, T> accumulator = ImmutableMultiset.Builder::add;
         final BinaryOperator<ImmutableMultiset.Builder<T>> combiner = (l, r) -> l.addAll(r.build());
         final Function<ImmutableMultiset.Builder<T>, ImmutableMultiset<T>> finisher = ImmutableMultiset.Builder::build;
+
+        return Collector.of(supplier, accumulator, combiner, finisher);
+    }
+
+    public static <K extends Comparable<?>, V> Collector<Tuple2<Range<K>, V>, ?, ImmutableRangeMap<K, V>> toGuavaImmutableRangeMap() {
+        final Supplier<ImmutableRangeMap.Builder<K, V>> supplier = ImmutableRangeMap.Builder::new;
+        final BiConsumer<ImmutableRangeMap.Builder<K, V>, Tuple2<Range<K>, V>> accumulator = (b, t) -> b.put(t._1, t._2);
+        final BinaryOperator<ImmutableRangeMap.Builder<K, V>> combiner = (l, r) -> l.putAll(r.build());
+        final Function<ImmutableRangeMap.Builder<K, V>, ImmutableRangeMap<K, V>> finisher = ImmutableRangeMap.Builder::build;
+
+        return Collector.of(supplier, accumulator, combiner, finisher);
+    }
+
+    public static <T extends Comparable<?>> Collector<Range<T>, ?, ImmutableRangeSet<T>> toGuavaImmutableRangeSet() {
+        final Supplier<ImmutableRangeSet.Builder<T>> supplier = ImmutableRangeSet.Builder::new;
+        final BiConsumer<ImmutableRangeSet.Builder<T>, Range<T>> accumulator = ImmutableRangeSet.Builder::add;
+        final BinaryOperator<ImmutableRangeSet.Builder<T>> combiner = (l, r) -> l.addAll(r.build());
+        final Function<ImmutableRangeSet.Builder<T>, ImmutableRangeSet<T>> finisher = ImmutableRangeSet.Builder::build;
 
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
@@ -147,8 +200,25 @@ public final class StreamCollectors {
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
 
-    // javaslang collectors
+    // javaslang collectors (order by javadoc)
+    // interfaces
+    static <T> Collector<T, ?, List<T>> toJavaslangList() {
+        return List.collector();
+    }
 
+    static <T> Collector<T, ?, Stack<T>> toJavaslangStack() {
+        return Stack.collector();
+    }
+
+    static <T> Collector<T, ?, Stream<T>> toJavaslangStream() {
+        return Stream.collector();
+    }
+
+    static <T> Collector<T, ?, Tree<T>> toJavaslangTree() {
+        return Tree.collector();
+    }
+
+    // classes
     public static <T> Collector<T, ?, Array<T>> toJavaslangArray() {
         return Array.collector();
     }
@@ -173,24 +243,8 @@ public final class StreamCollectors {
         return LinkedHashSet.collector();
     }
 
-    static <T> Collector<T, ?, List<T>> toJavaslangList() {
-        return List.collector();
-    }
-
     static <T> Collector<T, ?, Queue<T>> toJavaslangQueue() {
         return Queue.collector();
-    }
-
-    static <T> Collector<T, ?, Stack<T>> toJavaslangStack() {
-        return Stack.collector();
-    }
-
-    static <T> Collector<T, ?, Stream<T>> toJavaslangStream() {
-        return Stream.collector();
-    }
-
-    static <T> Collector<T, ?, Tree<T>> toJavaslangTree() {
-        return Tree.collector();
     }
 
     static <K,V> Collector<Tuple2<K,V>, ?, TreeMap<K,V>> toJavaslangTreeMap() {
