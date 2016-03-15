@@ -7,6 +7,7 @@
     <groupId>io.sourcy.streamify</groupId>
     <artifactId>streamify</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>${project.groupId}:${project.artifactId}</name>
     <description>
         Gluing code to connect the marvellous types from javaslang with java 8 streams and guava immutable collections.
     </description>
@@ -16,12 +17,14 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.javaslang</groupId>
             <artifactId>javaslang</artifactId>
             <version>${javaslang.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -34,10 +37,34 @@
 
     <properties>
         <junit.version>4.12</junit.version>
-        <guava.version>19.0</guava.version>
-        <javaslang.version>2.0.0-RC4</javaslang.version>
+        <guava.version>[15.0,)</guava.version>
+        <javaslang.version>[2.0.0-RC4,)</javaslang.version>
     </properties>
-
+    <licenses>
+        <license>
+            <name>APL Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Daniel Selinger</name>
+            <email>d.selinger@sourcy.io</email>
+            <organization>Sourcy.io</organization>
+            <organizationUrl>https://sourcy.io</organizationUrl>
+        </developer>
+        <developer>
+            <name>Armin Walland</name>
+            <email>a.walland@sourcy.io</email>
+            <organization>Sourcy.io</organization>
+            <organizationUrl>https://sourcy.io</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:sourcy/streamify.git</connection>
+        <developerConnection>scm:git:git@github.com:sourcy/streamify.git</developerConnection>
+        <url>git@github.com:sourcy/streamify.git</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
@@ -47,7 +74,36 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerArgument>-Xlint:all</compilerArgument>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
