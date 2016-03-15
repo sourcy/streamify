@@ -15,11 +15,10 @@ this library aims to make using them easier in standard Java 8.
 ## What can i do with it?
 
 Streamify contains 
-<ul>
-  <li>collectors for all immutable Guava, all javaslang, and java default collections</li>
-  <li>toStream() methods for many data types</li>
-  <li>toOption() and toOptional() methods for easy conversion between different optional types</li>
-</ul>
+
+* collectors for all immutable Guava, all javaslang, and java default collections
+* toStream() methods for many data types
+* toOption() and toOptional() methods for easy conversion between different optional types
 
 ## Examples
 
