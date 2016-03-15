@@ -159,4 +159,13 @@ public class ToStreamTest {
         final List<Double> result = toStream(DoubleStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
         assertThat(result, is(ImmutableList.of(1d, 2d, 3d, 4d)));
     }
+
+    @Test
+    public void testToStreamGuavaOptional() throws Exception {
+        final List<String> result1 = toStream(com.google.common.base.Optional.of("hullou")).collect(toList());
+        assertThat(result1, is(ImmutableList.of("hullou")));
+
+        final List<String> result2 = toStream(com.google.common.base.Optional.<String>absent()).collect(toList());
+        assertThat(result2, is(ImmutableList.of()));
+    }
 }
