@@ -25,13 +25,13 @@ Streamify contains
 ### Collecting into an immutable List
 
 #### Plain Java
-```
+```java
 final List<Integer> result = ImmutableList.copyOf(Arrays.stream(new Integer[]{1, 2, 2, -3})
   .collect(Collectors.toList()));
 ```
 
 #### Streamify
-```
+```java
 final List<Integer> result = toStream(new Integer[]{1, 2, 2, -3})
   .collect(toGuavaImmutableList());
 ```
@@ -39,7 +39,7 @@ final List<Integer> result = toStream(new Integer[]{1, 2, 2, -3})
 ### Exchanging K and V in a map
 
 #### Plain Java
-```
+```java
 final Map<Integer, String> values = ImmutableMap.of(1, "asdf", 2, "bsdf", -3, "csdf");
 final Map<String, Integer> result = values
   .entrySet()
@@ -48,7 +48,7 @@ final Map<String, Integer> result = values
 ```
 
 #### Streamify
-```
+```java
 final Map<Integer, String> values = ImmutableMap.of(1, "asdf", 2, "bsdf", -3, "csdf");
 final Map<String, Integer> result = toStream(values)
   .map(t -> Tuple.of(t._2, t._1))
@@ -56,7 +56,7 @@ final Map<String, Integer> result = toStream(values)
 ```
 
 ### Flatmapping Optional into a Stream
-```
+```java
 Optional<Person> getPerson(final Integer id) {
   // in reality this would maybe do some lookup somewhere
   return Optional.of(new Person(id));
@@ -64,7 +64,7 @@ Optional<Person> getPerson(final Integer id) {
 ```
 
 ### Plain Java
-```
+```java
 final List<Person> existingPersons = ImmutableList.copyOf(IntStream.iterate(1, i -> i + 1)
   .mapToObj(Integer::valueOf)
   .map(this::getPerson)
@@ -74,7 +74,7 @@ final List<Person> existingPersons = ImmutableList.copyOf(IntStream.iterate(1, i
 ```
 
 ### Streamify
-```
+```java
 final List<Person> existingPersons = toStream(IntStream.iterate(1, i -> i + 1))
   .flatMap(i -> toStream(getPerson(i)))
   .collect(toGuavaImmutableList());
