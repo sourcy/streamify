@@ -12,19 +12,20 @@ package io.sourcy.streamify;
  * Created by daniel selinger <d.selinger@sourcy.io> on 2016-02-27.
  */
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multiset;
 import javaslang.Tuple;
 import org.junit.Test;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.sourcy.streamify.StreamCollectors.*;
 import static io.sourcy.streamify.ToStream.toStream;
 import static java.util.function.Function.identity;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -33,68 +34,183 @@ import static org.junit.Assert.assertThat;
  * @author armin walland
  */
 public class StreamCollectorsTest {
-    private final TestData testData = new TestData();
+
+    // java collectors
+    @Test
+    public void testToJavaList() {
+        final List<Integer> result = ImmutableList.of(1, 2, 3).stream().collect(toJavaList());
+        assertThat(result, instanceOf(ArrayList.class));
+        assertThat(result, is(ImmutableList.of(1, 2, 3)));
+    }
+
+    @Test
+    public void testToJavaMap() {
+        final Map<Integer, String> result = ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(toJavaMap());
+        assertThat(result, instanceOf(HashMap.class));
+        assertThat(result, is(ImmutableMap.of(1, "a", 2, "b")));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testToJavaMapDuplicates() {
+        final Map<Integer, String> result = ImmutableList.of(Tuple.of(1, "a"), Tuple.of(1, "a")).stream().collect(toJavaMap());
+    }
+
+    @Test
+    public void testToJavaSet() {
+        final Set<Integer> result = ImmutableList.of(1, 2, 3).stream().collect(toJavaSet());
+        assertThat(result, instanceOf(HashSet.class));
+        assertThat(result, is(ImmutableSet.of(1, 2, 3)));
+    }
+
+    @Test
+    public void testToJavaSetDuplicates() {
+        final Set<Integer> result = ImmutableList.of(1, 2, 2, 3).stream().collect(toJavaSet());
+        assertThat(result, instanceOf(HashSet.class));
+        assertThat(result, is(ImmutableSet.of(1, 2, 3)));
+    }
+
+    @Test
+    public void testToGuavaImmutableBiMap() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableClassToInstanceMap() {
+
+    }
 
     @Test
     public void testToGuavaImmutableList() {
-        final List<Integer> result = toStream(testData.getAllValues()).collect(toGuavaImmutableList());
-        assertThat(result, is(testData.getAllValues()));
+
     }
 
     @Test
-    public void testToGuavaImmutableSet() {
-        final Set<Integer> result = toStream(testData.getDistinctPositiveValues()).collect(toGuavaImmutableSet());
-        assertThat(result, is(testData.getDistinctPositiveValues()));
+    public void testToGuavaImmutableListMultimap() {
+
     }
 
     @Test
-    public void testToGuavaSortedImmutableSet() {
-        final Set<Integer> expected = testData.getAllValues().stream().distinct().collect(Collectors.toSet());
-        final Set<Integer> result = toStream(testData.getAllValues()).collect(toGuavaImmutableSortedSet(Integer::compareTo));
-        assertThat(result, is(expected));
+    public void testToGuavaImmutableMap() {
+
     }
 
     @Test
-    public void testToGuavaImmutableMapWithTuples() {
-        final Map<Integer, Boolean> result = toStream(testData.getMappedPositiveValues()).collect(toGuavaImmutableMap());
-        assertThat(result, is(testData.getMappedPositiveValues()));
-    }
+    public void testToGuavaImmutableMultimap() {
 
-    @Test
-    public void testToGuavaImmutableSortedMap() {
-        final Map<Integer, Integer> result = toStream(testData.getAllValues())
-                .distinct()
-                .map(a -> Tuple.of(a, a))
-                .collect(toGuavaImmutableSortedMap(Integer::compareTo));
-        final Map<Integer, Integer> expected = testData.getAllValues().stream()
-                .sorted()
-                .distinct()
-                .collect(Collectors.toMap(identity(), identity()));
-        assertThat(result, is(expected));
-    }
-
-    @Test
-    public void testToGuavaImmutableSortedMultiset() {
-        // this will break if the hashing algorithm changes
-        final Iterator<Multiset.Entry<Integer>> result = toStream(testData.getAllValues())
-                .collect(toGuavaImmutableSortedMultiset(Integer::compareTo))
-                .entrySet()
-                .stream()
-                .iterator();
-        assertThat(result.next().getCount(), is(1));
-        assertThat(result.next().getCount(), is(1));
-        assertThat(result.next().getCount(), is(2));
     }
 
     @Test
     public void testToGuavaImmutableMultiset() {
-        // this will break if the hashing algorithm changes
-        final Iterator<Multiset.Entry<Integer>> iterator = toStream(testData.getAllValues())
-                .collect(toGuavaImmutableMultiset())
-                .entrySet()
-                .iterator();
-        assertThat(iterator.next().getCount(), is(1));
-        assertThat(iterator.next().getCount(), is(2));
-        assertThat(iterator.next().getCount(), is(1));
+
+    }
+
+    @Test
+    public void testToGuavaImmutableRangeMap() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableRangeSet() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableSet() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableSetMultimap() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableSortedMap() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableSortedMultiset() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableSortedSet() {
+
+    }
+
+    @Test
+    public void testToGuavaImmutableTable() {
+
+    }
+
+    @Test
+    public void testToJavaslangList() {
+
+    }
+
+    @Test
+    public void testToJavaslangStack() {
+
+    }
+
+    @Test
+    public void testToJavaslangStream() {
+
+    }
+
+    @Test
+    public void testToJavaslangTree() {
+
+    }
+
+    @Test
+    public void testToJavaslangArray() {
+
+    }
+
+    @Test
+    public void testToJavaslangCharSeq() {
+
+    }
+
+    @Test
+    public void testToJavaslangHashMap() {
+
+    }
+
+    @Test
+    public void testToJavaslangHashSet() {
+
+    }
+
+    @Test
+    public void testToJavaslangLinkedHashMap() {
+
+    }
+
+    @Test
+    public void testToJavaslangLinkedHashSet() {
+
+    }
+
+    @Test
+    public void testToJavaslangQueue() {
+
+    }
+
+    @Test
+    public void testToJavaslangTreeMap() {
+
+    }
+
+    @Test
+    public void testToJavaslangTreeSet() {
+
+    }
+
+    @Test
+    public void testToJavaslangVector() {
+
     }
 }

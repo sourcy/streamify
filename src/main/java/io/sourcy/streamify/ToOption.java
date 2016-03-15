@@ -22,26 +22,34 @@ public final class ToOption {
     }
 
     public static <T> javaslang.control.Option<T> toOption(final java.util.Optional<T> o) {
-        return javaslang.control.Option.ofOptional(o);
+        return (o != null && o.isPresent()) ? javaslang.control.Option.of(o.get()) : javaslang.control.Option.none();
     }
 
     public static <T> javaslang.control.Option<T> toOption(final com.google.common.base.Optional<T> o) {
-        return o.isPresent() ? javaslang.control.Option.some(o.get()) : javaslang.control.Option.none();
+        return (o != null && o.isPresent()) ? javaslang.control.Option.some(o.get()) : javaslang.control.Option.none();
     }
 
     public static <T> javaslang.control.Option<T> toOption(final javaslang.control.Option<T> o) {
-        return o;
+        return o != null ? o : javaslang.control.Option.none();
+    }
+
+    public static <T> javaslang.control.Option<T> toOption(final T o) {
+        return javaslang.control.Option.of(o);
     }
 
     public static <T> java.util.Optional<T> toOptional(final javaslang.control.Option<T> o) {
-        return o.toJavaOptional();
+        return (o != null && o.isDefined()) ? java.util.Optional.of(o.get()) : java.util.Optional.empty();
     }
 
     public static <T> java.util.Optional<T> toOptional(final com.google.common.base.Optional<T> o) {
-        return o.isPresent() ? java.util.Optional.of(o.get()) : java.util.Optional.empty();
+        return (o != null && o.isPresent()) ? java.util.Optional.of(o.get()) : java.util.Optional.empty();
     }
 
     public static <T> java.util.Optional<T> toOptional(final java.util.Optional<T> o) {
-        return o;
+        return o != null ? o : java.util.Optional.empty();
+    }
+
+    public static <T> java.util.Optional<T> toOptional(final T o) {
+        return java.util.Optional.ofNullable(o);
     }
 }

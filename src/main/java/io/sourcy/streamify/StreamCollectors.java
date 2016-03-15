@@ -32,8 +32,6 @@ import java.util.stream.Collectors;
  */
 public final class StreamCollectors {
 
-    // TODO test remaining collectors
-
     private StreamCollectors() {
     }
 

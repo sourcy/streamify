@@ -19,7 +19,6 @@ import javaslang.Value;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -34,8 +33,8 @@ public final class ToStream {
     private ToStream() {
     }
 
-    // tostream for java standard collections
-    public static <T> Stream<T> toStream(final Optional<T> o) {
+    // tostream for java standard types
+    public static <T> Stream<T> toStream(final java.util.Optional<T> o) {
         return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
     }
 
@@ -63,10 +62,12 @@ public final class ToStream {
         return m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue()));
     }
 
-    // tostream for special guava collections (not covered or awkward to use by java standard types)
-    // TODO write toStream + collector tests for all immutable guava collections and check it the stream contains usable data
+    // tostream for guava types
+    public static <T> Stream<T> toStream(final com.google.common.base.Optional<T> o) {
+        return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
+    }
 
-    // tostream for javaslang collections
+    // tostream for javaslang types
     public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
         return v.toJavaStream();
     }
