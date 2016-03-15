@@ -25,10 +25,10 @@ Streamify contains
 ### Collecting into an immutable List
 
 #### Plain Java
-~~~~
+```
 final List<Integer> result = ImmutableList.copyOf(Arrays.stream(new Integer[]{1, 2, 2, -3})
   .collect(Collectors.toList()));
-~~~~
+```
 
 #### Streamify
 ```
