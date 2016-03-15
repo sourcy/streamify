@@ -39,6 +39,7 @@
         <junit.version>4.12</junit.version>
         <guava.version>[15.0,)</guava.version>
         <javaslang.version>[2.0.0-RC4,)</javaslang.version>
+        <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
     </properties>
     <licenses>
         <license>
@@ -135,16 +136,15 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <!--  implementation is needed only for Maven 2  -->
-                                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                                <rule>
                                     <element>BUNDLE</element>
                                     <!--<limits>-->
-                                        <!--&lt;!&ndash;  implementation is needed only for Maven 2  &ndash;&gt;-->
-                                        <!--<limit>-->
-                                            <!--<counter>COMPLEXITY</counter>-->
-                                            <!--<value>COVEREDRATIO</value>-->
-                                            <!--<minimum>0.60</minimum>-->
-                                        <!--</limit>-->
+                                    <!--&lt;!&ndash;  implementation is needed only for Maven 2  &ndash;&gt;-->
+                                    <!--<limit>-->
+                                    <!--<counter>COMPLEXITY</counter>-->
+                                    <!--<value>COVEREDRATIO</value>-->
+                                    <!--<minimum>0.60</minimum>-->
+                                    <!--</limit>-->
                                     <!--</limits>-->
                                 </rule>
                             </rules>
@@ -152,6 +152,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <linkXRef>false</linkXRef>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
 </project>
