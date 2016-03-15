@@ -24,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 import static io.sourcy.streamify.StreamCollectors.ImmutableDefaultCollectors.*;
 import static io.sourcy.streamify.ToStream.toStream;
@@ -137,5 +140,23 @@ public class ToStreamTest {
     public void testToStreamTrySuccess() {
         final List<Integer> result = toStream(Try.success(9)).collect(toList());
         assertThat(result, is(ImmutableList.of(9)));
+    }
+
+    @Test
+    public void testToStreamIntStream() throws Exception {
+        final List<Integer> result = toStream(IntStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
+        assertThat(result, is(ImmutableList.of(1, 2, 3, 4)));
+    }
+
+    @Test
+    public void testToStreamLongStream() throws Exception {
+        final List<Long> result = toStream(LongStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
+        assertThat(result, is(ImmutableList.of(1L, 2L, 3L, 4L)));
+    }
+
+    @Test
+    public void testToStreamDoubleStream() throws Exception {
+        final List<Double> result = toStream(DoubleStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
+        assertThat(result, is(ImmutableList.of(1d, 2d, 3d, 4d)));
     }
 }
