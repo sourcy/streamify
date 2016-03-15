@@ -32,23 +32,47 @@ import java.util.stream.Collectors;
  */
 public final class StreamCollectors {
 
+    // TODO test remaining collectors
+
     private StreamCollectors() {
     }
 
-    // TODO test remaining collectors
+    public final static class ImmutableDefaultCollectors {
 
-    // shorthands for common collection types to guava immutable implementations
-    // TODO should we rename those to something not colliding with java standard collectors? i like it though
-    public static <T> Collector<T, ?, ImmutableList<T>> toList() {
-        return toGuavaImmutableList();
+        private ImmutableDefaultCollectors() {
+        }
+
+        // shorthands for common collection types to guava immutable implementations
+        public static <T> Collector<T, ?, ImmutableList<T>> toList() {
+            return toGuavaImmutableList();
+        }
+
+        public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableMap<K, V>> toMap() {
+            return toGuavaImmutableMap();
+        }
+
+        public static <T> Collector<T, ?, ImmutableSet<T>> toSet() {
+            return toGuavaImmutableSet();
+        }
     }
 
-    public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableMap<K, V>> toMap() {
-        return toGuavaImmutableMap();
-    }
+    public final static class MutableDefaultCollectors {
 
-    public static <T> Collector<T, ?, ImmutableSet<T>> toSet() {
-        return toGuavaImmutableSet();
+        private MutableDefaultCollectors() {
+        }
+
+        // shorthands for common collection types to java implementations
+        public static <T> Collector<T, ?, java.util.List<T>> toList() {
+            return toJavaList();
+        }
+
+        public static <K, V> Collector<Tuple2<K, V>, ?, java.util.Map<K, V>> toMap() {
+            return toJavaMap();
+        }
+
+        public static <T> Collector<T, ?, java.util.Set<T>> toSet() {
+            return toJavaSet();
+        }
     }
 
     // java standard collectors (for consistent naming and a sane default for toMap)
@@ -56,12 +80,12 @@ public final class StreamCollectors {
         return Collectors.toList();
     }
 
-    public static <T> Collector<T, ?, java.util.Set<T>> toJavaSet() {
-        return Collectors.toSet();
-    }
-
     public static <K, V> Collector<Tuple2<K, V>, ?, java.util.Map<K, V>> toJavaMap() {
         return Collectors.toMap(Tuple2::_1, Tuple2::_2);
+    }
+
+    public static <T> Collector<T, ?, java.util.Set<T>> toJavaSet() {
+        return Collectors.toSet();
     }
 
     // guava immutable collectors (order by javadoc, excluding ImmutableCollection - it's Builder is abstract)

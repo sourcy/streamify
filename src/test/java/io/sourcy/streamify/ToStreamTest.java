@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static io.sourcy.streamify.StreamCollectors.*;
+import static io.sourcy.streamify.StreamCollectors.ImmutableDefaultCollectors.*;
 import static io.sourcy.streamify.ToStream.toStream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
