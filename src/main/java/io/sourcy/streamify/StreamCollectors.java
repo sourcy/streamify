@@ -86,7 +86,7 @@ public final class StreamCollectors {
         return Collectors.toSet();
     }
 
-    // guava immutable collectors (order by javadoc, excluding ImmutableCollection - it's Builder is abstract)
+    // guava immutable collectors (order by javadoc, excluding ImmutableCollection - its Builder is abstract)
     public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableBiMap<K, V>> toGuavaImmutableBiMap() {
         final Supplier<ImmutableBiMap.Builder<K, V>> supplier = ImmutableBiMap.Builder::new;
         final BiConsumer<ImmutableBiMap.Builder<K, V>, Tuple2<K, V>> accumulator = (b, t) -> b.put(t._1, t._2);
