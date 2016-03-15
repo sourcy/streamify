@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -38,6 +41,18 @@ public final class ToStream {
 
     public static <T> Stream<T> toStream(final Collection<T> c) {
         return c.stream();
+    }
+
+    public static Stream<Integer> toStream(final IntStream s) {
+        return s.mapToObj(Integer::valueOf);
+    }
+
+    public static Stream<Double> toStream(final DoubleStream s) {
+        return s.mapToObj(Double::valueOf);
+    }
+
+    public static Stream<Long> toStream(final LongStream s) {
+        return s.mapToObj(Long::valueOf);
     }
 
     public static <T> Stream<T> toStream(final T[] a) {
