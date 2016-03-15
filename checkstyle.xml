@@ -25,5 +25,6 @@
             <property name="max" value="15"/>
             <property name="countEmpty" value="false"/>
         </module>
+        <module name="NeedBraces"/>
     </module>
 </module>
