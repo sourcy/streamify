@@ -33,8 +33,8 @@ Streamify contains
 
 This basically boils down to the following usage pattern:
 
-* Use `toStream(data)` instead of the Java and Javaslang default methods. This gives you one consistent way to create a (Java) `Stream` from pretty much everything. All those are Null-safe and return empty Streams instead of exploding into your face.
-* Use (Javaslang) `toOption(data)` or (Java) `toOptional(data)` (depending on which you prefer) to convert from the other Optional types and raw data e.g. `toOption(someIntegerVariable)` to the type you prefer to work with. Those are also Null-safe and give you an empty Optional / None if need to.
+* Use `toStream(data)` instead of the Java and Javaslang default methods. This gives you one consistent way to create a (Java) `Stream` from pretty much anything. All those are Null-safe and return empty Streams instead of exploding into your face.
+* Use (Javaslang) `toOption(data)` or (Java) `toOptional(data)` (depending on which you prefer) to convert from the other Optional types and raw data e.g. `toOption(someIntegerVariable)` to the type you prefer to work with. Those are also Null-safe and give you an empty Optional / None if needed.
 * You want your data back? Just use one of the provided collectors to produce a collection of your liking. No more `copyOf`, `asList`, `ofAll` and the other 10 different variants you can't remember when you need them.
 
 
@@ -50,7 +50,7 @@ final List<Integer> result = ImmutableList.copyOf(Arrays.stream(new Integer[]{1,
 
 #### Streamify
 
-As you can see there is a `toStream()` function that directly supports Arrays and the Stream gets directly collected into an Guava `ImmutableList`.
+As you can see there is a `toStream()` function that directly supports Arrays and the Stream is collected directly into a Guava `ImmutableList`.
 
 ```java
 final List<Integer> result = toStream(new Integer[]{1, 2, 2, -3})
@@ -59,7 +59,7 @@ final List<Integer> result = toStream(new Integer[]{1, 2, 2, -3})
 
 ### Working with Maps
 
-Lets exchange the key and value of a Map.
+Let's switch the key and value of a Map.
 
 #### Plain Java
 ```java
@@ -94,6 +94,7 @@ Optional<Person> getPerson(final Integer id) {
 ```java
 final List<Person> existingPersons = ImmutableList.copyOf(IntStream.iterate(1, i -> i + 1)
   .mapToObj(Integer::valueOf)
+  .limit(3) 
   .map(this::getPerson)
   .filter(Optional::isPresent)
   .map(Optional::get)
@@ -101,8 +102,12 @@ final List<Person> existingPersons = ImmutableList.copyOf(IntStream.iterate(1, i
 ```
 
 #### Streamify
+
+Note that `toStream(IntStream)` also creates a `Stream<Integer>` from the `IntStream`.
+
 ```java
 final List<Person> existingPersons = toStream(IntStream.iterate(1, i -> i + 1))
+  .limit(3)
   .flatMap(i -> toStream(getPerson(i)))
   .collect(toGuavaImmutableList());
 ```
@@ -116,7 +121,7 @@ TODO
 
 ### Collectors
 
-All collectors can be statically included without the pain of name conflicts.
+All collectors can be statically imported without the pain of name conflicts.
 
 A simple
 
