@@ -13,7 +13,6 @@ package io.sourcy.streamify;
  */
 
 import com.google.common.collect.*;
-
 import javaslang.Tuple2;
 import javaslang.Tuple3;
 import javaslang.collection.*;
@@ -231,7 +230,7 @@ public final class StreamCollectors {
         return CharSeq.collector();
     }
 
-    static <K,V> Collector<Tuple2<K,V>, ?, HashMap<K,V>> toJavaslangHashMap() {
+    static <K, V> Collector<Tuple2<K, V>, ?, HashMap<K, V>> toJavaslangHashMap() {
         return HashMap.collector();
     }
 
@@ -239,7 +238,7 @@ public final class StreamCollectors {
         return HashSet.collector();
     }
 
-    static <K,V> Collector<Tuple2<K,V>, ?, LinkedHashMap<K,V>> toJavaslangLinkedHashMap() {
+    static <K, V> Collector<Tuple2<K, V>, ?, LinkedHashMap<K, V>> toJavaslangLinkedHashMap() {
         return LinkedHashMap.collector();
     }
 
@@ -251,7 +250,7 @@ public final class StreamCollectors {
         return Queue.collector();
     }
 
-    static <K,V> Collector<Tuple2<K,V>, ?, TreeMap<K,V>> toJavaslangTreeMap() {
+    static <K, V> Collector<Tuple2<K, V>, ?, TreeMap<K, V>> toJavaslangTreeMap() {
         return TreeMap.collector();
     }
 

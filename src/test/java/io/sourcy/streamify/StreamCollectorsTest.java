@@ -16,18 +16,8 @@ import com.google.common.collect.*;
 import javaslang.Tuple;
 import javaslang.Tuple2;
 import javaslang.collection.*;
-import javaslang.collection.HashMap;
-import javaslang.collection.HashSet;
-import javaslang.collection.LinkedHashMap;
-import javaslang.collection.LinkedHashSet;
-import javaslang.collection.Queue;
-import javaslang.collection.Stack;
-import javaslang.collection.TreeMap;
-import javaslang.collection.TreeSet;
-import javaslang.collection.Vector;
 import org.junit.Test;
 
-import java.util.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
