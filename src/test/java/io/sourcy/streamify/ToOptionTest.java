@@ -33,7 +33,7 @@ public class ToOptionTest {
         final javaslang.control.Option<Integer> noneResult = toOption(java.util.Optional.empty());
         assertThat(noneResult, is(javaslang.control.Option.none()));
 
-        final javaslang.control.Option<Integer> nullResult = toOption((java.util.Optional) null);
+        final javaslang.control.Option<Integer> nullResult = toOption((java.util.Optional<Integer>) null);
         assertThat(nullResult, is(javaslang.control.Option.none()));
     }
 
@@ -45,7 +45,7 @@ public class ToOptionTest {
         final javaslang.control.Option<Integer> noneResult = toOption(com.google.common.base.Optional.absent());
         assertThat(noneResult, is(javaslang.control.Option.none()));
 
-        final javaslang.control.Option<Integer> nullResult = toOption((com.google.common.base.Optional) null);
+        final javaslang.control.Option<Integer> nullResult = toOption((com.google.common.base.Optional<Integer>) null);
         assertThat(nullResult, is(javaslang.control.Option.none()));
     }
 
@@ -57,7 +57,7 @@ public class ToOptionTest {
         final javaslang.control.Option<Integer> noneResult = toOption(javaslang.control.Option.none());
         assertThat(noneResult, is(javaslang.control.Option.none()));
 
-        final javaslang.control.Option<Integer> nullResult = toOption((javaslang.control.Option) null);
+        final javaslang.control.Option<Integer> nullResult = toOption((javaslang.control.Option<Integer>) null);
         assertThat(nullResult, is(javaslang.control.Option.none()));
     }
 
@@ -78,7 +78,7 @@ public class ToOptionTest {
         final java.util.Optional<Integer> noneResult = toOptional(javaslang.control.Option.none());
         assertThat(noneResult, is(java.util.Optional.empty()));
 
-        final java.util.Optional<Integer> nullResult = toOptional((javaslang.control.Option) null);
+        final java.util.Optional<Integer> nullResult = toOptional((javaslang.control.Option<Integer>) null);
         assertThat(nullResult, is(java.util.Optional.empty()));
     }
 
@@ -90,7 +90,7 @@ public class ToOptionTest {
         final java.util.Optional<Integer> noneResult = toOptional(com.google.common.base.Optional.absent());
         assertThat(noneResult, is(java.util.Optional.empty()));
 
-        final java.util.Optional<Integer> nullResult = toOptional((com.google.common.base.Optional) null);
+        final java.util.Optional<Integer> nullResult = toOptional((com.google.common.base.Optional<Integer>) null);
         assertThat(nullResult, is(java.util.Optional.empty()));
     }
 
@@ -102,7 +102,7 @@ public class ToOptionTest {
         final java.util.Optional<Integer> noneResult = toOptional(java.util.Optional.empty());
         assertThat(noneResult, is(java.util.Optional.empty()));
 
-        final java.util.Optional<Integer> nullResult = toOptional((java.util.Optional) null);
+        final java.util.Optional<Integer> nullResult = toOptional((java.util.Optional<Integer>) null);
         assertThat(nullResult, is(java.util.Optional.empty()));
     }
 

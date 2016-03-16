@@ -86,21 +86,12 @@ public final class StreamCollectors {
         return Collectors.toSet();
     }
 
-    // guava immutable collectors (order by javadoc, excluding ImmutableCollection - its Builder is abstract)
+    // guava immutable collectors (order by javadoc)
     public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableBiMap<K, V>> toGuavaImmutableBiMap() {
         final Supplier<ImmutableBiMap.Builder<K, V>> supplier = ImmutableBiMap.Builder::new;
         final BiConsumer<ImmutableBiMap.Builder<K, V>, Tuple2<K, V>> accumulator = (b, t) -> b.put(t._1, t._2);
         final BinaryOperator<ImmutableBiMap.Builder<K, V>> combiner = (l, r) -> l.putAll(r.build());
         final Function<ImmutableBiMap.Builder<K, V>, ImmutableBiMap<K, V>> finisher = ImmutableBiMap.Builder::build;
-
-        return Collector.of(supplier, accumulator, combiner, finisher);
-    }
-
-    public static <T, A extends T> Collector<Tuple2<Class<A>,A>, ?, ImmutableClassToInstanceMap<T>> toGuavaImmutableClassToInstanceMap() {
-        final Supplier<ImmutableClassToInstanceMap.Builder<T>> supplier = ImmutableClassToInstanceMap.Builder::new;
-        final BiConsumer<ImmutableClassToInstanceMap.Builder<T>, Tuple2<Class<A>,A>> accumulator = (b, t) -> b.put(t._1, t._2);
-        final BinaryOperator<ImmutableClassToInstanceMap.Builder<T>> combiner = (l, r) -> l.putAll(r.build());
-        final Function<ImmutableClassToInstanceMap.Builder<T>, ImmutableClassToInstanceMap<T>> finisher = ImmutableClassToInstanceMap.Builder::build;
 
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
@@ -128,15 +119,6 @@ public final class StreamCollectors {
         final BiConsumer<ImmutableMap.Builder<K, V>, Tuple2<K, V>> accumulator = (b, t) -> b.put(t._1, t._2);
         final BinaryOperator<ImmutableMap.Builder<K, V>> combiner = (l, r) -> l.putAll(r.build());
         final Function<ImmutableMap.Builder<K, V>, ImmutableMap<K, V>> finisher = ImmutableMap.Builder::build;
-
-        return Collector.of(supplier, accumulator, combiner, finisher);
-    }
-
-    public static <K, V> Collector<Tuple2<K, V>, ?, ImmutableMultimap<K, V>> toGuavaImmutableMultimap() {
-        final Supplier<ImmutableMultimap.Builder<K, V>> supplier = ImmutableMultimap.Builder::new;
-        final BiConsumer<ImmutableMultimap.Builder<K, V>, Tuple2<K, V>> accumulator = (b, t) -> b.put(t._1, t._2);
-        final BinaryOperator<ImmutableMultimap.Builder<K, V>> combiner = (l, r) -> l.putAll(r.build());
-        final Function<ImmutableMultimap.Builder<K, V>, ImmutableMultimap<K, V>> finisher = ImmutableMultimap.Builder::build;
 
         return Collector.of(supplier, accumulator, combiner, finisher);
     }
