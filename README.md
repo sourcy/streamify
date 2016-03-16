@@ -103,7 +103,7 @@ final List<Person> existingPersons = ImmutableList.copyOf(IntStream.iterate(1, i
 
 #### Streamify
 
-Note that `toStream(IntStream)` also creates a `Stream<Integer>` from the `IntStream`.
+Note that `toStream(IntStream)` also creates a `Stream<Integer>` from the `IntStream`. This also works for LongStream, DoubleStream, int[], long[], double[], float[] and char[].
 
 ```java
 final List<Person> existingPersons = toStream(IntStream.iterate(1, i -> i + 1))
