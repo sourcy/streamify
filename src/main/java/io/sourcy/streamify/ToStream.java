@@ -35,40 +35,56 @@ public final class ToStream {
 
     // tostream for java standard types
     public static <T> Stream<T> toStream(final java.util.Optional<T> o) {
-        return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
+        return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
     }
 
     public static <T> Stream<T> toStream(final Collection<T> c) {
-        return c.stream();
-    }
-
-    public static Stream<Integer> toStream(final IntStream s) {
-        return s.mapToObj(Integer::valueOf);
-    }
-
-    public static Stream<Double> toStream(final DoubleStream s) {
-        return s.mapToObj(Double::valueOf);
-    }
-
-    public static Stream<Long> toStream(final LongStream s) {
-        return s.mapToObj(Long::valueOf);
-    }
-
-    public static <T> Stream<T> toStream(final T[] a) {
-        return Arrays.stream(a);
+        return c != null ? c.stream() : Stream.empty();
     }
 
     public static <K, V> Stream<Tuple2<K, V>> toStream(final Map<K, V> m) {
-        return m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue()));
+        return m != null ? m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue())) : Stream.empty();
+    }
+
+    public static <T> Stream<T> toStream(final T[] a) {
+        return a != null ? Arrays.stream(a) : Stream.empty();
+    }
+
+    public static Stream<Integer> toStream(final int[] a) {
+        return toStream(a != null ? Arrays.stream(a) : IntStream.empty());
+    }
+
+    public static Stream<Double> toStream(final double[] a) {
+        return toStream(a != null ? Arrays.stream(a) : DoubleStream.empty());
+    }
+
+    public static Stream<Long> toStream(final long[] a) {
+        return toStream(a != null ? Arrays.stream(a) : LongStream.empty());
+    }
+
+    public static <T> Stream<T> toStream(final Stream<T> s) {
+        return s != null ? s : Stream.empty();
+    }
+
+    public static Stream<Integer> toStream(final IntStream s) {
+        return s != null ? s.mapToObj(Integer::valueOf) : Stream.empty();
+    }
+
+    public static Stream<Double> toStream(final DoubleStream s) {
+        return s != null ? s.mapToObj(Double::valueOf) : Stream.empty();
+    }
+
+    public static Stream<Long> toStream(final LongStream s) {
+        return s != null ? s.mapToObj(Long::valueOf) : Stream.empty();
     }
 
     // tostream for guava types
     public static <T> Stream<T> toStream(final com.google.common.base.Optional<T> o) {
-        return o.isPresent() ? Stream.of(o.get()) : Stream.empty();
+        return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
     }
 
     // tostream for javaslang types
     public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
-        return v.toJavaStream();
+        return v != null ? v.toJavaStream() : Stream.empty();
     }
 }

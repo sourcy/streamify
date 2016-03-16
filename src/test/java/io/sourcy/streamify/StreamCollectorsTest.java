@@ -35,21 +35,21 @@ public class StreamCollectorsTest {
 
     // mutable default collectors
     @Test
-    public void testMutableToList() {
+    public void testMutableDefaultToList() {
         final List<Integer> result =
                 ImmutableList.of(1, 2, 3).stream().collect(MutableDefaultCollectors.toList());
         assertThat(result, is(ImmutableList.of(1, 2, 3)));
     }
 
     @Test
-    public void testMutableToMap() {
+    public void testMutableDefaultToMap() {
         final Map<Integer, String> result =
                 ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(MutableDefaultCollectors.toMap());
         assertThat(result, is(ImmutableMap.of(1, "a", 2, "b")));
     }
 
     @Test
-    public void testMutableToSet() {
+    public void testMutableDefaultToSet() {
         final Set<Integer> result =
                 ImmutableList.of(1, 2, 2, 3, 3).stream().collect(MutableDefaultCollectors.toSet());
         assertThat(result, is(ImmutableSet.of(1, 2, 3)));
@@ -57,21 +57,21 @@ public class StreamCollectorsTest {
 
     // immutable default collectors
     @Test
-    public void testImmutableToList() {
+    public void testImmutableDefaultToList() {
         final List<Integer> result =
                 ImmutableList.of(1, 2, 3).stream().collect(ImmutableDefaultCollectors.toList());
         assertThat(result, is(ImmutableList.of(1, 2, 3)));
     }
 
     @Test
-    public void testImmutableToMap() {
+    public void testImmutableDefaultToMap() {
         final Map<Integer, String> result =
                 ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(ImmutableDefaultCollectors.toMap());
         assertThat(result, is(ImmutableMap.of(1, "a", 2, "b")));
     }
 
     @Test
-    public void testImmutableToSet() {
+    public void testImmutableDefaultToSet() {
         final Set<Integer> result =
                 ImmutableList.of(1, 2, 2, 3, 3).stream().collect(ImmutableDefaultCollectors.toSet());
         assertThat(result, is(ImmutableSet.of(1, 2, 3)));

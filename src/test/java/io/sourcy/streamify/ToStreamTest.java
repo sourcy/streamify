@@ -15,21 +15,20 @@ package io.sourcy.streamify;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import javaslang.Tuple;
+import javaslang.Tuple2;
+import javaslang.collection.Array;
 import javaslang.control.Either;
-import javaslang.control.Option;
 import javaslang.control.Try;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
+import java.util.stream.*;
 
-import static io.sourcy.streamify.StreamCollectors.ImmutableDefaultCollectors.*;
 import static io.sourcy.streamify.ToStream.toStream;
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -39,133 +38,167 @@ import static org.junit.Assert.assertThat;
  */
 public class ToStreamTest {
 
-    private Optional<Integer> mapPositiveOptional(final Integer i) {
-        return (i >= 0) ? Optional.of(i) : Optional.empty();
-    }
-
-    private Option<Integer> mapPositiveOption(final Integer i) {
-        return (i >= 0) ? Option.some(i) : Option.none();
-    }
-
-    private Either<String, Integer> mapPositiveEither(final Integer i) {
-        return (i >= 0) ? Either.right(i) : Either.left("Negative Number!");
-    }
-
+    // java standard types
     @Test
-    public void testToStreamArray() {
-        final Integer[] a = new Integer[ImmutableList.of(1, 2, 2, -3).size()];
-        final List<Integer> result = toStream(ImmutableList.of(1, 2, 2, -3).toArray(a)).collect(toList());
-        assertThat(result, is(ImmutableList.of(1, 2, 2, -3)));
+    public void testToStreamJavaOptional() {
+        final List<Integer> someResult = toStream(java.util.Optional.of(1)).collect(toList());
+        assertThat(someResult, is(Stream.of(1).collect(toList())));
+
+        final List<Integer> noneResult = toStream(java.util.Optional.<Integer>empty()).collect(toList());
+        assertThat(noneResult, is(Stream.empty().collect(toList())));
+
+        final List<Integer> nullResult = toStream((java.util.Optional<Integer>) null).collect(toList());
+        assertThat(nullResult, is(Stream.empty().collect(toList())));
     }
 
     @Test
     public void testToStreamList() {
-        final List<Integer> result = toStream(ImmutableList.of(1, 2, 2, -3)).collect(toList());
-        assertThat(result, is(ImmutableList.of(1, 2, 2, -3)));
-    }
+        final ImmutableList<Integer> l = ImmutableList.of(1, 2, 3);
+        final List<Integer> someResult = toStream(l).collect(toList());
+        assertThat(someResult, is(l));
 
-    @Test
-    public void testToStreamSet() {
-        final Set<Integer> result = toStream(ImmutableSet.of(1, 2)).collect(toSet());
-        assertThat(result, is(ImmutableSet.of(1, 2)));
+        final List<Integer> nullResult = toStream((List<Integer>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
     public void testToStreamMap() {
-        final Map<Integer, Boolean> result = toStream(ImmutableMap.of(1, true, 2, true, -3, false)).collect(toMap());
-        assertThat(result, is(ImmutableMap.of(1, true, 2, true, -3, false)));
+        final List<Tuple2<Integer, String>> someResult = toStream(ImmutableMap.of(1, "a", 2, "b")).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b"))));
+
+        final List<Tuple2<Integer, String>> nullResult = toStream((Map<Integer, String>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamOptional() {
-        final List<Integer> result1 = toStream(Optional.of(1)).collect(toList());
-        assertThat(result1, is(ImmutableList.of(1)));
+    public void testToStreamSet() {
+        final List<Integer> someResult = toStream(ImmutableSet.of(1, 2, 2, 3, 3)).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1, 2, 3)));
 
-        final List<Integer> result2 = toStream(Optional.<Integer>empty()).collect(toList());
-        assertThat(result2, is(ImmutableList.of()));
+        final List<Integer> nullResult = toStream((Set<Integer>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamFlatMapOptional() {
-        final List<Integer> result = toStream(ImmutableList.of(1, 2, 2, -3))
-                .flatMap(i -> toStream(mapPositiveOptional(i)))
-                .collect(toList());
+    public void testToStreamArray() {
+        final Integer[] a = {1, 2, 3};
+        final List<Integer> someResult = toStream(a).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1, 2, 3)));
 
-        assertThat(result, is(ImmutableList.of(1, 2, 2)));
+        final List<Integer> nullResult = toStream((Integer[]) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamOption() {
-        final List<Integer> result1 = toStream(Option.of(1)).collect(toList());
-        assertThat(result1, is(ImmutableList.of(1)));
+    public void testToStreamIntArray() {
+        final int[] a = {1, 2, 3};
+        final List<Integer> someResult = toStream(a).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1, 2, 3)));
 
-        final List<Integer> result2 = toStream(Option.<Integer>none()).collect(toList());
-        assertThat(result2, is(ImmutableList.of()));
+        final List<Integer> nullResult = toStream((int[]) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamFlatMapOption() {
-        final List<Integer> result = toStream(ImmutableList.of(1, 2, 2, -3))
-                .flatMap(i -> toStream(mapPositiveOption(i)))
-                .collect(toList());
+    public void testToStreamDoubleArray() {
+        final double[] a = {1d, 2d, 3d};
+        final List<Double> someResult = toStream(a).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1d, 2d, 3d)));
 
-        assertThat(result, is(ImmutableList.of(1, 2, 2)));
+        final List<Double> nullResult = toStream((double[]) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamEither() {
-        final List<Integer> result1 = toStream(Either.<String, Integer>right(1)).collect(toList());
-        assertThat(result1, is(ImmutableList.of(1)));
+    public void testToStreamLongArray() {
+        final long[] a = {1L, 2L, 3L};
+        final List<Long> someResult = toStream(a).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1L, 2L, 3L)));
 
-        final List<Integer> result2 = toStream(Either.<String, Integer>left("error message")).collect(toList());
-        assertThat(result2, is(ImmutableList.of()));
+        final List<Long> nullResult = toStream((long[]) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamFlatMapEither() {
-        final List<Integer> result = toStream(ImmutableList.of(1, 2, 2, -3))
-                .flatMap(i -> toStream(mapPositiveEither(i)))
-                .collect(toList());
+    public void testToStreamStream() throws Exception {
+        final List<Integer> someResult = toStream(Stream.of(1, 2, 3)).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1, 2, 3)));
 
-        assertThat(result, is(ImmutableList.of(1, 2, 2)));
-    }
-
-    @Test
-    public void testToStreamTryFailure() {
-        final List<Integer> result = toStream(Try.<Integer>failure(new Throwable("nothing"))).collect(toList());
-        assertThat(result, is(ImmutableList.<Integer>of()));
-    }
-
-    @Test
-    public void testToStreamTrySuccess() {
-        final List<Integer> result = toStream(Try.success(9)).collect(toList());
-        assertThat(result, is(ImmutableList.of(9)));
+        final List<Integer> nullResult = toStream((Stream<Integer>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
     public void testToStreamIntStream() throws Exception {
-        final List<Integer> result = toStream(IntStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
-        assertThat(result, is(ImmutableList.of(1, 2, 3, 4)));
+        final List<Integer> someResult = toStream(IntStream.iterate(1, i -> i + 1)).limit(3).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1, 2, 3)));
+
+        final List<Integer> nullResult = toStream((IntStream) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
     public void testToStreamLongStream() throws Exception {
-        final List<Long> result = toStream(LongStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
-        assertThat(result, is(ImmutableList.of(1L, 2L, 3L, 4L)));
+        final List<Long> someResult = toStream(LongStream.iterate(1, i -> i + 1)).limit(3).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1L, 2L, 3L)));
+
+        final List<Long> nullResult = toStream((LongStream) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
     public void testToStreamDoubleStream() throws Exception {
-        final List<Double> result = toStream(DoubleStream.iterate(1, i -> i + 1)).limit(4).collect(toList());
-        assertThat(result, is(ImmutableList.of(1d, 2d, 3d, 4d)));
+        final List<Double> someResult = toStream(DoubleStream.iterate(1, i -> i + 1)).limit(3).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1d, 2d, 3d)));
+
+        final List<Double> nullResult = toStream((DoubleStream) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
+    }
+
+    // guauva types
+    @Test
+    public void testToStreamGuavaOptional() {
+        final List<Integer> someResult = toStream(com.google.common.base.Optional.of(1)).collect(toList());
+        assertThat(someResult, is(Stream.of(1).collect(toList())));
+
+        final List<Integer> noneResult = toStream(com.google.common.base.Optional.<Integer>absent()).collect(toList());
+        assertThat(noneResult, is(Stream.empty().collect(toList())));
+
+        final List<Integer> nullResult = toStream((com.google.common.base.Optional<Integer>) null).collect(toList());
+        assertThat(nullResult, is(Stream.empty().collect(toList())));
+    }
+
+    // javaslang types (toStream can handle all subtypes of @Value, just testing some)
+    @Test
+    public void testToStreamJavaslangTry() {
+        final List<Integer> failureResult = toStream(Try.<Integer>failure(new Throwable("nothing"))).collect(toList());
+        assertThat(failureResult, is(ImmutableList.<Integer>of()));
+
+        final List<Integer> successResult = toStream(Try.success(9)).collect(toList());
+        assertThat(successResult, is(ImmutableList.of(9)));
+
+        final List<Integer> nullResult = toStream((Try<Integer>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     @Test
-    public void testToStreamGuavaOptional() throws Exception {
-        final List<String> result1 = toStream(com.google.common.base.Optional.of("hullou")).collect(toList());
-        assertThat(result1, is(ImmutableList.of("hullou")));
+    public void testToStreamJavaslangEither() {
+        final List<Integer> rightResult = toStream(Either.<String, Integer>right(1)).collect(toList());
+        assertThat(rightResult, is(ImmutableList.of(1)));
 
-        final List<String> result2 = toStream(com.google.common.base.Optional.<String>absent()).collect(toList());
-        assertThat(result2, is(ImmutableList.of()));
+        final List<Integer> leftResult = toStream(Either.<String, Integer>left("error message")).collect(toList());
+        assertThat(leftResult, is(ImmutableList.of()));
+
+        final List<Integer> nullResult = toStream((Either<String, Integer>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
-}
+
+    @Test
+    public void testToStreamJavaslangList() {
+        final List<Integer> someResult = toStream(javaslang.collection.List.of(1, 2, 3)).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(1, 2, 3)));
+
+        final List<Integer> nullResult = toStream((javaslang.collection.List<Integer>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
+    }
+  }
