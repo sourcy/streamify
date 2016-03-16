@@ -13,6 +13,27 @@ plus a myriad more wonderful things.
 
 This library aims to make using them easier in standard Java 8.
 
+## Maven
+
+```
+<dependency>
+    <groupId>io.sourcy</groupId>
+    <artifactId>streamify</artifactId>
+    <version>streamifyVersion</version>
+</dependency>
+<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>guavaVersion</version>
+</dependency>
+<dependency>
+    <groupId>com.javaslang</groupId>
+    <artifactId>javaslang</artifactId>
+    <version>javaslangVersionTwoAndUp</version>
+</dependency>
+
+```
+
 ## What can i do with it?
 
 Streamify contains
