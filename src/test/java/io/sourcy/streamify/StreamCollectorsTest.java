@@ -208,7 +208,7 @@ public class StreamCollectorsTest {
     }
 
 
-    // javaslang tests
+    // javaslang tests (i sell my soul for coverage!)
     @Test
     public void testToJavaslangList() {
         Collector<Object, ?, javaslang.collection.List<Object>> objectListCollector = toJavaslangList();
