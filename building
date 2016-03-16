@@ -1,7 +1,7 @@
-building & deploying:
+releasing & deploying:
 
-mvn clean install gpg:sign
-mvn clean install deploy
+mvn release:prepare
+mvn release:perform deploy
 
 .m2/settings.xml:
 <settings>
