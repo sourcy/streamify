@@ -30,69 +30,69 @@ import java.util.stream.Stream;
  * @author daniel selinger
  * @author armin walland
  */
-public final class ToStream {
+public final class Streamify {
 
-    private ToStream() {
+    private Streamify() {
     }
 
-    // tostream for java standard types
+    // streams for java standard types
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public static <T> Stream<T> toStream(final java.util.Optional<T> o) {
+    public static <T> Stream<T> stream(final java.util.Optional<T> o) {
         return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
     }
 
-    public static <T> Stream<T> toStream(final Collection<T> c) {
+    public static <T> Stream<T> stream(final Collection<T> c) {
         return c != null ? c.stream() : Stream.empty();
     }
 
-    public static <K, V> Stream<Tuple2<K, V>> toStream(final Map<K, V> m) {
+    public static <K, V> Stream<Tuple2<K, V>> stream(final Map<K, V> m) {
         return m != null ? m.entrySet().stream().map(e -> Tuple.of(e.getKey(), e.getValue())) : Stream.empty();
     }
 
-    public static <T> Stream<T> toStream(final T[] a) {
+    public static <T> Stream<T> stream(final T[] a) {
         return a != null ? Arrays.stream(a) : Stream.empty();
     }
 
-    public static Stream<Integer> toStream(final int[] a) {
-        return toStream(a != null ? Arrays.stream(a) : IntStream.empty());
+    public static Stream<Integer> stream(final int[] a) {
+        return stream(a != null ? Arrays.stream(a) : IntStream.empty());
     }
 
-    public static Stream<Double> toStream(final double[] a) {
-        return toStream(a != null ? Arrays.stream(a) : DoubleStream.empty());
+    public static Stream<Double> stream(final double[] a) {
+        return stream(a != null ? Arrays.stream(a) : DoubleStream.empty());
     }
 
-    public static Stream<Long> toStream(final long[] a) {
-        return toStream(a != null ? Arrays.stream(a) : LongStream.empty());
+    public static Stream<Long> stream(final long[] a) {
+        return stream(a != null ? Arrays.stream(a) : LongStream.empty());
     }
 
-    public static <T> Stream<T> toStream(final Stream<T> s) {
+    public static <T> Stream<T> stream(final Stream<T> s) {
         return s != null ? s : Stream.empty();
     }
 
-    public static Stream<Integer> toStream(final IntStream s) {
+    public static Stream<Integer> stream(final IntStream s) {
         return s != null ? s.mapToObj(Integer::valueOf) : Stream.empty();
     }
 
-    public static Stream<Double> toStream(final DoubleStream s) {
+    public static Stream<Double> stream(final DoubleStream s) {
         return s != null ? s.mapToObj(Double::valueOf) : Stream.empty();
     }
 
-    public static Stream<Long> toStream(final LongStream s) {
+    public static Stream<Long> stream(final LongStream s) {
         return s != null ? s.mapToObj(Long::valueOf) : Stream.empty();
     }
 
-    // tostream for guava types
+    // streams for guava types
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public static <T> Stream<T> toStream(final com.google.common.base.Optional<T> o) {
+    public static <T> Stream<T> stream(final com.google.common.base.Optional<T> o) {
         return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
     }
 
-    public static <R, C, V> Stream<Tuple3<R, C, V>> toStream(final ImmutableTable<R, C, V> t) {
+    public static <R, C, V> Stream<Tuple3<R, C, V>> stream(final ImmutableTable<R, C, V> t) {
         return t != null ? t.cellSet().stream().map(c -> Tuple.of(c.getRowKey(), c.getColumnKey(), c.getValue())) : Stream.empty();
     }
 
-    // tostream for javaslang types
-    public static <T extends Value<U>, U> Stream<U> toStream(final T v) {
+    // streams for javaslang types
+    public static <T extends Value<U>, U> Stream<U> stream(final T v) {
         return v != null ? v.toJavaStream() : Stream.empty();
     }
 }

@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collector;
 
-import static io.sourcy.streamify.StreamCollectors.*;
+import static io.sourcy.streamify.StreamifyCollectors.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -31,9 +31,9 @@ import static org.junit.Assert.assertThat;
  * @author daniel selinger
  * @author armin walland
  */
-public class StreamCollectorsTest {
+public class StreamifyCollectorsTest {
 
-    // mutable default collectors
+    // java default collectors
     @Test
     public void testJavaDefaultToList() {
         final List<Integer> result =
@@ -55,7 +55,7 @@ public class StreamCollectorsTest {
         assertThat(result, is(ImmutableSet.of(1, 2, 3)));
     }
 
-    // immutable default collectors
+    // guava default collectors
     @Test
     public void testGuavaDefaultToList() {
         final List<Integer> result =
@@ -75,6 +75,28 @@ public class StreamCollectorsTest {
         final Set<Integer> result =
                 ImmutableList.of(1, 2, 2, 3, 3).stream().collect(GuavaDefaultCollectors.toSet());
         assertThat(result, is(ImmutableSet.of(1, 2, 3)));
+    }
+
+    // javaslang default collectors
+    @Test
+    public void testJavaslangDefaultToList() {
+        final javaslang.collection.List<Integer> result =
+                ImmutableList.of(1, 2, 3).stream().collect(JavaslangDefaultCollectors.toList());
+        assertThat(result, is(javaslang.collection.List.of(1, 2, 3)));
+    }
+
+    @Test
+    public void testJavaslangDefaultToMap() {
+        final javaslang.collection.Map<Integer, String> result =
+                ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(JavaslangDefaultCollectors.toMap());
+        assertThat(result, is(javaslang.collection.HashMap.of(1, "a", 2, "b")));
+    }
+
+    @Test
+    public void testJavaslangDefaultToSet() {
+        final javaslang.collection.Set<Integer> result =
+                ImmutableList.of(1, 2, 2, 3, 3).stream().collect(JavaslangDefaultCollectors.toSet());
+        assertThat(result, is(javaslang.collection.HashSet.of(1, 2, 3)));
     }
 
     // java collectors

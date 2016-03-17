@@ -29,9 +29,28 @@ import java.util.stream.Collectors;
  * @author daniel selinger
  * @author armin walland
  */
-public final class StreamCollectors {
+public final class StreamifyCollectors {
 
-    private StreamCollectors() {
+    private StreamifyCollectors() {
+    }
+
+    public final static class JavaDefaultCollectors {
+
+        private JavaDefaultCollectors() {
+        }
+
+        // shorthands for common collection types to java implementations
+        public static <T> Collector<T, ?, java.util.List<T>> toList() {
+            return toJavaList();
+        }
+
+        public static <K, V> Collector<Tuple2<K, V>, ?, java.util.Map<K, V>> toMap() {
+            return toJavaMap();
+        }
+
+        public static <T> Collector<T, ?, java.util.Set<T>> toSet() {
+            return toJavaSet();
+        }
     }
 
     public final static class GuavaDefaultCollectors {
@@ -53,22 +72,22 @@ public final class StreamCollectors {
         }
     }
 
-    public final static class JavaDefaultCollectors {
+    public final static class JavaslangDefaultCollectors {
 
-        private JavaDefaultCollectors() {
+        private JavaslangDefaultCollectors() {
         }
 
-        // shorthands for common collection types to java implementations
-        public static <T> Collector<T, ?, java.util.List<T>> toList() {
-            return toJavaList();
+        // shorthands for common collection types to javaslang immutable implementations
+        public static <T> Collector<T, ?, javaslang.collection.List<T>> toList() {
+            return toJavaslangList();
         }
 
-        public static <K, V> Collector<Tuple2<K, V>, ?, java.util.Map<K, V>> toMap() {
-            return toJavaMap();
+        public static <K, V> Collector<Tuple2<K, V>, ?, javaslang.collection.HashMap<K, V>> toMap() {
+            return toJavaslangHashMap();
         }
 
-        public static <T> Collector<T, ?, java.util.Set<T>> toSet() {
-            return toJavaSet();
+        public static <T> Collector<T, ?, javaslang.collection.HashSet<T>> toSet() {
+            return toJavaslangHashSet();
         }
     }
 
