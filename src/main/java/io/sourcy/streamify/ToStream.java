@@ -36,6 +36,7 @@ public final class ToStream {
     }
 
     // tostream for java standard types
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static <T> Stream<T> toStream(final java.util.Optional<T> o) {
         return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
     }
@@ -81,6 +82,7 @@ public final class ToStream {
     }
 
     // tostream for guava types
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     public static <T> Stream<T> toStream(final com.google.common.base.Optional<T> o) {
         return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
     }

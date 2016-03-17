@@ -16,6 +16,7 @@ package io.sourcy.streamify;
  * @author daniel selinger
  * @author armin walland
  */
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public final class ToOption {
 
     private ToOption() {
