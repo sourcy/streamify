@@ -152,12 +152,12 @@ collectors at your disposal.
 If you like it short, there are 2 additional Classes you can import if you want.
 
 ```java
-import static io.sourcy.streamify.StreamCollectors.ImmutableDefaultCollectors.*;
+import static io.sourcy.streamify.StreamCollectors.GuavaDefaultCollectors.*;
 ```
-This will give you immutable versions of ```toList()```, ```toMap()``` and ```toSet()```.
+This will give you immutable guava versions of ```toList()```, ```toMap()``` and ```toSet()```.
 
 If you prefer the mutable counterparts you can import
 ```java
-import static io.sourcy.streamify.StreamCollectors.MutableDefaultCollectors.*;
+import static io.sourcy.streamify.StreamCollectors.JavaDefaultCollectors.*;
 ```
 This will mostly give you the Java 8 default mutable collectors but with a version of `toMap()` that works with Tuples.

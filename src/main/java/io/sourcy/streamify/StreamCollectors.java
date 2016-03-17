@@ -34,9 +34,9 @@ public final class StreamCollectors {
     private StreamCollectors() {
     }
 
-    public final static class ImmutableDefaultCollectors {
+    public final static class GuavaDefaultCollectors {
 
-        private ImmutableDefaultCollectors() {
+        private GuavaDefaultCollectors() {
         }
 
         // shorthands for common collection types to guava immutable implementations
@@ -53,9 +53,9 @@ public final class StreamCollectors {
         }
     }
 
-    public final static class MutableDefaultCollectors {
+    public final static class JavaDefaultCollectors {
 
-        private MutableDefaultCollectors() {
+        private JavaDefaultCollectors() {
         }
 
         // shorthands for common collection types to java implementations

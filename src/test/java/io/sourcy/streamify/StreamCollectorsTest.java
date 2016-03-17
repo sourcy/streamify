@@ -35,45 +35,45 @@ public class StreamCollectorsTest {
 
     // mutable default collectors
     @Test
-    public void testMutableDefaultToList() {
+    public void testJavaDefaultToList() {
         final List<Integer> result =
-                ImmutableList.of(1, 2, 3).stream().collect(MutableDefaultCollectors.toList());
+                ImmutableList.of(1, 2, 3).stream().collect(JavaDefaultCollectors.toList());
         assertThat(result, is(ImmutableList.of(1, 2, 3)));
     }
 
     @Test
-    public void testMutableDefaultToMap() {
+    public void testJavaDefaultToMap() {
         final Map<Integer, String> result =
-                ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(MutableDefaultCollectors.toMap());
+                ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(JavaDefaultCollectors.toMap());
         assertThat(result, is(ImmutableMap.of(1, "a", 2, "b")));
     }
 
     @Test
-    public void testMutableDefaultToSet() {
+    public void testJavaDefaultToSet() {
         final Set<Integer> result =
-                ImmutableList.of(1, 2, 2, 3, 3).stream().collect(MutableDefaultCollectors.toSet());
+                ImmutableList.of(1, 2, 2, 3, 3).stream().collect(JavaDefaultCollectors.toSet());
         assertThat(result, is(ImmutableSet.of(1, 2, 3)));
     }
 
     // immutable default collectors
     @Test
-    public void testImmutableDefaultToList() {
+    public void testGuavaDefaultToList() {
         final List<Integer> result =
-                ImmutableList.of(1, 2, 3).stream().collect(ImmutableDefaultCollectors.toList());
+                ImmutableList.of(1, 2, 3).stream().collect(GuavaDefaultCollectors.toList());
         assertThat(result, is(ImmutableList.of(1, 2, 3)));
     }
 
     @Test
-    public void testImmutableDefaultToMap() {
+    public void testGuavaDefaultToMap() {
         final Map<Integer, String> result =
-                ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(ImmutableDefaultCollectors.toMap());
+                ImmutableList.of(Tuple.of(1, "a"), Tuple.of(2, "b")).stream().collect(GuavaDefaultCollectors.toMap());
         assertThat(result, is(ImmutableMap.of(1, "a", 2, "b")));
     }
 
     @Test
-    public void testImmutableDefaultToSet() {
+    public void testGuavaDefaultToSet() {
         final Set<Integer> result =
-                ImmutableList.of(1, 2, 2, 3, 3).stream().collect(ImmutableDefaultCollectors.toSet());
+                ImmutableList.of(1, 2, 2, 3, 3).stream().collect(GuavaDefaultCollectors.toSet());
         assertThat(result, is(ImmutableSet.of(1, 2, 3)));
     }
 

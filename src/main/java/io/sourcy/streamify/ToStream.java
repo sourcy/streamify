@@ -12,8 +12,10 @@ package io.sourcy.streamify;
  * Created by daniel selinger <d.selinger@sourcy.io> on 2016-02-27.
  */
 
+import com.google.common.collect.ImmutableTable;
 import javaslang.Tuple;
 import javaslang.Tuple2;
+import javaslang.Tuple3;
 import javaslang.Value;
 
 import java.util.Arrays;
@@ -81,6 +83,10 @@ public final class ToStream {
     // tostream for guava types
     public static <T> Stream<T> toStream(final com.google.common.base.Optional<T> o) {
         return (o != null && o.isPresent()) ? Stream.of(o.get()) : Stream.empty();
+    }
+
+    public static <R, C, V> Stream<Tuple3<R, C, V>> toStream(final ImmutableTable<R, C, V> t) {
+        return t != null ? t.cellSet().stream().map(c -> Tuple.of(c.getRowKey(), c.getColumnKey(), c.getValue())) : Stream.empty();
     }
 
     // tostream for javaslang types

@@ -15,9 +15,10 @@ package io.sourcy.streamify;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableTable;
 import javaslang.Tuple;
 import javaslang.Tuple2;
-import javaslang.collection.Array;
+import javaslang.Tuple3;
 import javaslang.control.Either;
 import javaslang.control.Try;
 import org.junit.Test;
@@ -155,7 +156,7 @@ public class ToStreamTest {
         assertThat(nullResult, is(ImmutableList.of()));
     }
 
-    // guauva types
+    // guauva types (most of them are handled by Map, List, Set)
     @Test
     public void testToStreamGuavaOptional() {
         final List<Integer> someResult = toStream(com.google.common.base.Optional.of(1)).collect(toList());
@@ -166,6 +167,17 @@ public class ToStreamTest {
 
         final List<Integer> nullResult = toStream((com.google.common.base.Optional<Integer>) null).collect(toList());
         assertThat(nullResult, is(Stream.empty().collect(toList())));
+    }
+
+    @Test
+    public void testToStreamGuavaImmutableTable() {
+        final ImmutableTable<Integer, Integer, String> t = new ImmutableTable.Builder<Integer, Integer, String>()
+                .put(1, 1, "a").put(2, 2, "b").put(4, 4, "d").put(3, 3, "c").build();
+        final List<Tuple3<Integer, Integer, String>> someResult = toStream(t).collect(toList());
+        assertThat(someResult, is(ImmutableList.of(Tuple.of(1, 1, "a"), Tuple.of(2, 2, "b"), Tuple.of(4, 4, "d"), Tuple.of(3, 3, "c"))));
+
+        final List<Tuple3<Integer, Integer, String>> nullResult = toStream((ImmutableTable<Integer, Integer, String>) null).collect(toList());
+        assertThat(nullResult, is(ImmutableList.of()));
     }
 
     // javaslang types (toStream can handle all subtypes of @Value, just testing some)
