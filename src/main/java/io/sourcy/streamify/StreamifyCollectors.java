@@ -228,10 +228,6 @@ public final class StreamifyCollectors {
         return List.collector();
     }
 
-    static <T> Collector<T, ?, Stack<T>> toJavaslangStack() {
-        return Stack.collector();
-    }
-
     static <T> Collector<T, ?, Stream<T>> toJavaslangStream() {
         return Stream.collector();
     }

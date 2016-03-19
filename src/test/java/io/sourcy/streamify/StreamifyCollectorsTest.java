@@ -227,11 +227,6 @@ public class StreamifyCollectorsTest {
     }
 
     @Test
-    public void testToJavaslangStack() {
-        Collector<Object, ?, Stack<Object>> objectStackCollector = toJavaslangStack();
-    }
-
-    @Test
     public void testToJavaslangStream() {
         Collector<Object, ?, Stream<Object>> objectStreamCollector = toJavaslangStream();
     }
