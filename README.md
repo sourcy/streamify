@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sourcy/streamify.svg?branch=master)](https://travis-ci.org/sourcy/streamify)
+
 # Streamify
 
 Streamify is a small utility library that combines the power of google's 
