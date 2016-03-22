@@ -30,7 +30,7 @@ This library aims to make using and mixing them easier in standard Java 8.
     <version>guavaVersion</version>
 </dependency>
 <dependency>
-    <groupId>com.javaslang</groupId>
+    <groupId>io.javaslang</groupId>
     <artifactId>javaslang</artifactId>
     <version>javaslangVersionTwoRC3OrGreater</version>
 </dependency>
