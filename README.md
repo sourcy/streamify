@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/sourcy/streamify.svg?branch=master)](https://travis-ci.org/sourcy/streamify)
 [![codecov.io](https://codecov.io/github/sourcy/streamify/coverage.svg?branch=master)](https://codecov.io/github/sourcy/streamify?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.sourcy/streamify/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.sourcy/streamify)
 
 # Streamify
 
