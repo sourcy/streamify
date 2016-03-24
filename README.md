@@ -1,10 +1,10 @@
 [![Build Status](https://travis-ci.org/sourcy/streamify.svg?branch=master)](https://travis-ci.org/sourcy/streamify)
 [![codecov.io](https://codecov.io/github/sourcy/streamify/coverage.svg?branch=master)](https://codecov.io/github/sourcy/streamify?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.sourcy/streamify/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.sourcy/streamify)
+[![Join the chat at https://gitter.im/sourcy/streamify](https://badges.gitter.im/sourcy/streamify.svg)](https://gitter.im/sourcy/streamify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Streamify
 
-[![Join the chat at https://gitter.im/sourcy/streamify](https://badges.gitter.im/sourcy/streamify.svg)](https://gitter.im/sourcy/streamify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Streamify is a small utility library that combines the power of google's 
 Guava and Javaslang with the standard Java 8 streaming API.
