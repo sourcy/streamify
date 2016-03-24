@@ -4,6 +4,8 @@
 
 # Streamify
 
+[![Join the chat at https://gitter.im/sourcy/streamify](https://badges.gitter.im/sourcy/streamify.svg)](https://gitter.im/sourcy/streamify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Streamify is a small utility library that combines the power of google's 
 Guava and Javaslang with the standard Java 8 streaming API.
 
