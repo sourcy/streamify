@@ -224,15 +224,15 @@ public final class StreamifyCollectors {
 
     // javaslang collectors (order by javadoc)
     // interfaces
-    static <T> Collector<T, ?, List<T>> toJavaslangList() {
+    public static <T> Collector<T, ?, List<T>> toJavaslangList() {
         return List.collector();
     }
 
-    static <T> Collector<T, ?, Stream<T>> toJavaslangStream() {
+    public static <T> Collector<T, ?, Stream<T>> toJavaslangStream() {
         return Stream.collector();
     }
 
-    static <T> Collector<T, ?, Tree<T>> toJavaslangTree() {
+    public static <T> Collector<T, ?, Tree<T>> toJavaslangTree() {
         return Tree.collector();
     }
 
@@ -241,39 +241,39 @@ public final class StreamifyCollectors {
         return Array.collector();
     }
 
-    static Collector<Character, ?, CharSeq> toJavaslangCharSeq() {
+    public static Collector<Character, ?, CharSeq> toJavaslangCharSeq() {
         return CharSeq.collector();
     }
 
-    static <K, V> Collector<Tuple2<K, V>, ?, HashMap<K, V>> toJavaslangHashMap() {
+    public static <K, V> Collector<Tuple2<K, V>, ?, HashMap<K, V>> toJavaslangHashMap() {
         return HashMap.collector();
     }
 
-    static <T> Collector<T, ?, HashSet<T>> toJavaslangHashSet() {
+    public static <T> Collector<T, ?, HashSet<T>> toJavaslangHashSet() {
         return HashSet.collector();
     }
 
-    static <K, V> Collector<Tuple2<K, V>, ?, LinkedHashMap<K, V>> toJavaslangLinkedHashMap() {
+    public static <K, V> Collector<Tuple2<K, V>, ?, LinkedHashMap<K, V>> toJavaslangLinkedHashMap() {
         return LinkedHashMap.collector();
     }
 
-    static <T> Collector<T, ?, LinkedHashSet<T>> toJavaslangLinkedHashSet() {
+    public static <T> Collector<T, ?, LinkedHashSet<T>> toJavaslangLinkedHashSet() {
         return LinkedHashSet.collector();
     }
 
-    static <T> Collector<T, ?, Queue<T>> toJavaslangQueue() {
+    public static <T> Collector<T, ?, Queue<T>> toJavaslangQueue() {
         return Queue.collector();
     }
 
-    static <K, V> Collector<Tuple2<K, V>, ?, TreeMap<K, V>> toJavaslangTreeMap() {
+    public static <K, V> Collector<Tuple2<K, V>, ?, TreeMap<K, V>> toJavaslangTreeMap() {
         return TreeMap.collector();
     }
 
-    static <T> Collector<T, ?, TreeSet<T>> toJavaslangTreeSet() {
+    public static <T> Collector<T, ?, TreeSet<T>> toJavaslangTreeSet() {
         return TreeSet.collector();
     }
 
-    static <T> Collector<T, ?, Vector<T>> toJavaslangVector() {
+    public static <T> Collector<T, ?, Vector<T>> toJavaslangVector() {
         return Vector.collector();
     }
 }
