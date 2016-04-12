@@ -27,16 +27,6 @@ This library aims to make using and mixing them easier in standard Java 8.
     <artifactId>streamify</artifactId>
     <version>streamifyVersion</version>
 </dependency>
-<dependency>
-    <groupId>com.google.guava</groupId>
-    <artifactId>guava</artifactId>
-    <version>guavaVersion</version>
-</dependency>
-<dependency>
-    <groupId>io.javaslang</groupId>
-    <artifactId>javaslang</artifactId>
-    <version>javaslangVersionTwoRC3OrGreater</version>
-</dependency>
 ```
 
 ## What can i do with it?
