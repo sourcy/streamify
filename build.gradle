@@ -12,6 +12,8 @@ description = """io.sourcy:streamify"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
+
 checkstyle {
     configFile = new File(rootDir, "checkstyle.xml")
     sourceSets = [project.sourceSets.main]
