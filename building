@@ -1,15 +1,19 @@
 releasing & deploying:
 
-mvn release:prepare
-mvn release:perform deploy
+* remove -SNAPSHOT from version
+* gradle clean build uploadArchives
+* go to https://oss.sonatype.org/#stagingRepositories
+** close repo
+** release repo
+** see http://central.sonatype.org/pages/releasing-the-deployment.html
 
-.m2/settings.xml:
-<settings>
-  <servers>
-    <server>
-      <id>ossrh</id>
-      <username>your-jira-id</username>
-      <password>your-jira-pwd</password>
-    </server>
-  </servers>
-</settings>
+
+.gradle/gradle.properties:
+
+org.gradle.daemon=true
+sonatypeUsername=a.walland
+sonatypePassword=secret
+
+signing.keyId=2B071630
+signing.password=secret
+signing.secretKeyRingFile=/home/youruser/.gnupg/secring.gpg
