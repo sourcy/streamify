@@ -13,6 +13,10 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 
+// needed for travis
+def sonatypeUsername = hasProperty('sonatypeUsername') ? blahUser : System.getenv('sonatypeUsername')
+def sonatypePassword = hasProperty('sonatypePassword') ? sonatypePassword : System.getenv('sonatypePassword')
+
 
 checkstyle {
     configFile = new File(rootDir, "checkstyle.xml")
